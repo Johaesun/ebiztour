@@ -17,22 +17,48 @@
 		table tr th:nth-child(2){width:70%;}
 		table tr th:last-child{width:15%;}
 		table tr td p{float:left; padding-right:10px}
+		table tr td .today{float:right;}
 			table tr td:nth-child(2){text-align:left;}
 				table tr td a{text-decoration:none; color:#000;}
 				table tr td a:hover{text-decoration:underline; color:#000;}
-		table tr .notice{width:100%; height:400px; overflow: scroll; margin:0 auto; border-top:1px solid gray}
+		table tr .notice{width:100%; height:400px; margin:0 auto; border-top:1px solid gray}
+			table tr .notice textarea{width:100%; height:100%; border:none; background:#f0f0f0;}
+		.btn_insert {width:55px; ne-height:30px; margin:0 auto; position:absolute; left:0; right:0; margin-top:40px;}
 	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-<h1>
-	<a href="index.php">
-		<p>∞‘Ω√∆«:)</p>
-	</a>
-</h1>
-		<table>
-			<tr>
-				<td>±€¡¶∏Ò &#58; <input type="text" /></td>
-			</tr>
-		</table>
+    <h1>
+        <a href="index.php">
+            <p>Í≤åÏãúÌåê:)</p>
+        </a>
+    </h1>
+    <form action="insert_db.php" method="post" enctype="multipart/form=date">
+        <table>
+            <tr>
+                <td>
+                    <p>
+                        Í∏ÄÏ†úÎ™© &#58; <input type="text" name="title"/>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="dc">
+                    <p class="today">
+                        <?php
+						$today = date("y-m-d");
+						echo "20".$today;
+						?>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="notice">
+                    <textarea name="notice" id="" cols="30" rows="10"></textarea>
+                </td>
+            </tr>
+        </table>
+        <button type="submit" class="btn_insert">Í∏ÄÏì∞Í∏∞</button>
+    </form>
 </body>
 </html>

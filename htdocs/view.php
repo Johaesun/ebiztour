@@ -1,6 +1,7 @@
 <?php
    include './htdocs/db.php';
-   $sql = "select * from test_jhs where idx='{$_GET['idx']}'";
+   $idx=$_GET['idx'];
+   $sql="select * from test_jhs where idx='$idx'";
    $result = mysql_query($sql, $dbconn);
    $count = "update test_jhs set count=count+1 where idx='{$_GET['idx']}'"; 
    mysql_query ($count, $dbconn);
@@ -31,76 +32,122 @@
 		.see li{list-style:none;  width:100%; height:30px; line-height:30px; border-bottom:1px solid #000; padding-left:20px;}
 		.see li:first-child{font-weight:bold}
 			.see li p{float:left; margin-right:10px}
-			.this{background-color:gray}
+			.this{background:#d9d9d9}
+			.this p{text-decoration:underline;  font-weight:bold}
 	</style>
 </head>
 <body>
-<h1>
-	<a href="index.php">
-		<p>게시판:)</p>
-	</a>
-</h1>
-	<div class="wrap">
-	<?php
+    <h1>
+        <a href="index.php">
+            <p>게시판:)</p>
+        </a>
+    </h1>
+    <div class="wrap">
+        <?php
 		while ($row = mysql_fetch_array($result)){
 	?>
-		<table>
-			<tr>
-				<td>
-					<p>
-						글제목 &#58; <span><?=$row['title']?></span>
-					</p>
-				</td>
-			</tr>
-			<tr>
-				<td class="dc">
-					<p>
-						<?=$row['date']?>
-					</p>
-					<p>
-						조회수 &#58; <?=$row['count']?>
-					</p>
-				</td>
-			</tr>
-			<tr>
-				<td class="notice">
-					<?=$row['notice']?>
-				</td>
-			</tr>
-		</table>
-			<?php
+	<form action="update.php?idx=<?=$row['idx']?>">
+            <table>
+                <tr>
+                    <td>
+                        <p>
+                            글제목 &#58; <span><?=$row['title']?></span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="dc">
+                        <p>
+                            <?=$row['date']?>
+                        </p>
+                        <p>
+                            조회수 &#58;
+                            <?=$row['count']+1?>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="notice">
+                        <?=$row['notice']?>
+                    </td>
+                </tr>
+            </table>
+			</form>
+            <?php
 		}
 	?>
-			<div class="btn_wrap">
-				<a href="index.php">
-					<button>뒤로가기</button>
-				</a>
-				<a href="delete.php?idx=<?=$row['idx']?>">
-					<button>삭제</button>
-				</a>
-				<a href="update.php?idx=<?=$row['idx']?>">
-					<button>수정</button>
-				</a>
-			</div>
-			<ul class="see">
-    <li>
-        <p>idx</p>
-        <p>title</p>
-        <p>date</p>
-        <p>count</p>
-    </li>
-</ul>
-		</div>
+            <div class="btn_wrap">
+                <a href="index.php">
+                    <button>뒤로가기</button>
+                </a>
+                <a href="delete.php?idx=<?=$row['idx']?>">
+                    <button>삭제</button>
+                </a>
+                <a href="update.php?idx=<?=$row['idx']?>">
+                    <button>수정</button>
+                </a>
+            </div>
+            <ul class="see">
+                <li>
+                    <p>idx</p>
+                    <p>title</p>
+                    <p>date</p>
+                    <p>count</p>
+                </li>
+                <?php
+			 $sql_sub= "select * from test_jhs order by idx limit 0,5";
+			 $result_sub = mysql_query($sql_sub, $dbconn);
+			while($row_sub=mysql_fetch_array($result_sub)){
+				if($idx==$row_sub['idx']){
+					?>
+                    <li class='this'>
+                        <p>
+                            <?=$row_sub['idx']?>
+                        </p>
+                        <p>
+                            <a href="view.php?idx=<?=$row_sub['idx']?>">
+                                <?=$row_sub['title']?>
+                            </a>
+                        </p>
+                        <p>
+                            <?=$row_sub['date']?>
+                        </p>
+                        <p>
+                            <?=$row_sub['count']?>
+                        </p>
+                    </li>
+                    <?php
+				}	else{
+						?>
+                    <li>
+                        <p>
+                            <?=$row_sub['idx']?>
+                        </p>
+                        <p>
+                            <a href="view.php?idx=<?=$row_sub['idx']?>">
+                                <?=$row_sub['title']?>
+                            </a>
+                        </p>
+                        <p>
+                            <?=$row_sub['date']?>
+                        </p>
+                        <p>
+                            <?=$row_sub['count']?>
+                        </p>
+                    </li>
+                    <?php
+				}
+				?>
+                    <?php
+			}
+		?>
+
+            </ul>
+    </div>
 </body>
 <script type="text/javascript">
-	<?php
-			$sql = "select * from test_jhs order by idx desc";
-			$result = mysql_query($sql, $dbconn);
-				while($row = mysql_fetch_array($result)){
-			?>
-		if($(".see li p."))
-	<?php
-					}
-			?>
+
+
 </script>
+
 </html>

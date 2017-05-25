@@ -5,8 +5,10 @@
 	notice='{$_POST['notice']}' 
 	where idx='{$_GET['idx']}'";
 	$result = mysql_query($update,$dbconn);
+	$count = "update test_jhs set count=count-1 where idx='{$_GET['idx']}'"; 
+   mysql_query ($count, $dbconn);
 ?>
 <script type="text/javascript">
 location.href='./index.php';
-alert ("¼öÁ¤ÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.");
+alert ("ìˆ˜ì •ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");
 </script>

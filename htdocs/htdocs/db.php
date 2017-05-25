@@ -1,10 +1,5 @@
 <?php
-	try{
-		$pdo = new PDO( "mysql:host=127.0.0.1; dbname=hyesun; charset=utf8;" , "root" , "");
-        $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-        $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES,false);
-	}
-	catch(PDOException $Exception){
-		die("�������".$Exception->getMessage());
-	}
+$dbconn = @mysql_connect("210.112.11.172:3306", "ebiztour", "ebiztour!!@#^^#@!!~") or die("데이타베이스 연결 실패.");
+$selectdb = @mysql_select_db("go", $dbconn) or die("데이타베이스 선택 에러."); 
+@mysql_query("set names utf8");
 ?>

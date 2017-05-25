@@ -1,6 +1,7 @@
 <?php
 	include "./htdocs/db.php";
-	$sql = "select * from test_jhs";
+	$idx=$_GET['idx'];
+	$sql="select * from test_jhs where idx='$idx'";
 	$result=mysql_query($sql, $dbconn);
 ?>
 <!DOCTYPE HTML>
@@ -23,7 +24,7 @@
 				table tr td a:hover{text-decoration:underline; color:#000;}
 		table tr .notice{width:100%; height:400px; margin:0 auto; border-top:1px solid gray}
 			table tr .notice textarea{width:100%; height:100%; border:none; background:#f0f0f0;}
-		.btn_insert {width:75px; height:50px; line-height:30px; margin:0 auto; position:absolute; left:0; right:0; margin-top:40px;}
+		.btn_insert {width:55px; margin:0 auto; position:absolute; left:0; right:0; margin-top:40px;}
 	</style>
 </head>
 <body>
@@ -32,15 +33,15 @@
             <p>게시판:)</p>
         </a>
     </h1>
-    <form action="insert_db.php" method="post" enctype="multipart/form=date">
 	<?php
-		while($row=mysql_fetch_array($result)){
-	?>
+					while ($row = mysql_fetch_array($result)){
+					?>
+    <form action="update_db.php?idx=<?=$idx?>" method="post">
         <table>
             <tr>
                 <td>
                     <p>
-                        글제목 &#58; <input type="text" name="title" />
+                        글제목 &#58; <input type="text" name="title" value="<?=$row['title']?>"/>
                     </p>
                 </td>
             </tr>
@@ -56,15 +57,14 @@
             </tr>
             <tr>
                 <td class="notice">
-                    <textarea name="notice" id="" cols="30" rows="10"></textarea>
+                    <textarea name="notice" id="" cols="30" rows="10"><?=$row['notice']?></textarea>
                 </td>
             </tr>
         </table>
-		<?php
-			}
-		?>
-        <button type="submit" class="btn_insert">글쓰기</button>
+        <button type="submit" class="btn_insert">수정</button>
     </form>
+	<?php
+					}
+						?>
 </body>
-
 </html>
