@@ -1,0 +1,48 @@
+﻿1번 테이블명 : n_product      - 필드 : NO, company, chk_view, fgubun 
+2번 테이블명 : n_product_room - 필드 : p_no, room_name, tmp_new, 
+3번 테이블명 : ticket_detail  - 필드 : p_no, dname, 
+
+3개 테이블 JOIN해서 결과가 나와야함
+결과에 노출시킬필드는 1번 테이블 company, 2번 테이블 room_name, 3번 테이블 dname 세개 필드만 노출
+
+1번테이블 NO 필드, 2번테이블 p_no 필드, 3번 테이블 p_no 필드는 다 동일한 값
+WHERE절에는 
+1) 1번 테이블 chk_view 필드가 Y
+2) 1번 테이블 fgubun 필드가 R이 아님 
+3) 2번 테이블 tmp_new 필드가 Y이고, room_name 이 공백이면 안됨 
+4) 3번 테이블 dname 이 공백이면 안됨
+
+테이블 2개 조인하는 경우 보통 아래처럼 씀
+ex) SELECT * FROM n_product AS a, n_product_room AS b WHERE a.no = b.p_no
+
+//WHERE (테이블이름).(컬럼이름) (구분자) (검사값)
+
+-----------------------------------------------------------------------------------------------------
+
+<?php
+	include "./htdocs/db.php";
+	$n_prodect="SELECT * FROM n_prodect"; //NO, company, chk_view, fgubun 
+	$n_product_room="SELECT * FROM n_product_room"; //p_no, room_name, tmp_new, 
+	$ticket_detail="SELECT * FROM ticket_detail"; //p_no, dname, 
+	
+	$result="SELECT * FROM n_product AS name, n_product_room AS p_no, ticket_detail AS dname wHERE n_prodect . chk_view = Y && fgubun != R, n_product_room . tmp_new ==Y, ticket_detail . dname !=''"
+?>
+
+
+
+============================================================================================================================================================================================================================================
+
+
+혜선
+SELECT * FROM ( n_prodect LEFT JOIN n_product_room ON n_prodect . NO = n_product_room . p_no) LEFT JOIN ticket_detail ON n_prodect . company =  ticket_detail . dname 
+ WHERE n_prodect . chk_view = Y && fgubun != R AND n_product_room . tmp_new ==Y AND ticket_detail . dname !=' '
+
+
+수정
+SELECT n_product.company, n_product_room.room_name, ticket_detail.dname FROM ( n_product LEFT JOIN n_product_room ON n_product.NO = n_product_room.p_no) LEFT JOIN ticket_detail ON n_product.no =  ticket_detail.p_no
+ WHERE n_product.chk_view = 'Y' && fgubun != 'R' AND n_product_room.tmp_new = 'Y' AND ticket_detail.dname !=' '
+
+
+ 
+내가 썻던 쿼리
+SELECT a.company, b.room_name, c.dname FROM n_product AS a, n_product_room AS b, ticket_detail AS c WHERE a.no = b.p_no AND b.p_no = c.p_no AND a.chk_view = 'Y' AND a.fgubun != 'R' AND b.tmp_new = 'Y' AND b.room_name != '' AND c.dname != ''
