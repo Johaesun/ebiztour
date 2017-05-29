@@ -1,0 +1,28 @@
+insert
+	include "./htdocs/db.php";
+	$sql = "select * from test_jhs";
+	$result=mysql_query($sql, $dbconn);
+update
+	include "./htdocs/db.php";
+	$idx=$_GET['idx'];
+	$sql="select * from test_jhs where idx='$idx'";
+	$result=mysql_query($sql, $dbconn);
+
+-----------------------------------------------------------------------------------------------------
+
+insert_db
+	$today = date("y-m-d");
+      	$insert = "insert into test_jhs set date='{$today}',title='{$_POST['title']}',notice='{$_POST['notice']}',count='0'";
+     	 $result=mysql_query($insert);
+     	 echo "<script>alert('작성되었습니다.');</script>";
+	 echo "<script>location.href='index.php'</script>";
+
+update_db
+	include "./htdocs/db.php";
+	$update = "update test_jhs set 
+	title='{$_POST['title']}',
+	notice='{$_POST['notice']}' 
+	where idx='{$_GET['idx']}'";
+	$result = mysql_query($update,$dbconn);
+	$count = "update test_jhs set count=count-1 where idx='{$_GET['idx']}'"; 
+  	 mysql_query ($count, $dbconn);

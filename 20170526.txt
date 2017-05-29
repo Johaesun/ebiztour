@@ -1,0 +1,19 @@
+2017.05.26
+2. 제주지역 : 타이스토리펜션 / 비스타케이월드컵 / 클럽다인리조트 -> 삭제요청
+
+에디트플러스
+<jhs>
+http://www.go.co.kr/
+	-여기서 fiddler2로 배너에서 넘어가는 값을 확인(state.php)
+
+ebizdev/go.co.kr/www/web-home/home/main/main_go.php 287Line
+ebizdev/go.co.kr/www/web-home/home/main/state.php 29Line
+	- 제주 구분 클레스가 JJ인걸 확인
+	- 스크립트가 넘어가는걸 확인
+
+ebizdev/go.co.kr/class/go_main.class.php 446Line
+	- '$loca_'가 state.php에서 받아질 로컬값임을 확인 . !이 Line을 활용!
+	Line 내용->(select * from slide_setting where code1 = '".$loca_."' order by num_order asc")
+
+http://master.go.co.kr/ -> [사이트관리] -> 통합업체관리
+	- 지울 이름 검색후 고유번호 색출
